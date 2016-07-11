@@ -1,27 +1,25 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "mokuroku",
+  "version": "0.0.0",
+  "description": "A manga catalogue",
   "main": "main.js",
   "scripts": {
     "start": "electron main.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron/electron-quick-start.git"
+    "url": "git+https://github.com/Mamotromico/Mokuroku.git"
   },
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial"
+    "Manga",
+    "Reader"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "Mamotromico",
+  "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/electron/electron-quick-start/issues"
+    "url": "https://github.com/Mamotromico/Mokuroku/issues"
   },
-  "homepage": "https://github.com/electron/electron-quick-start#readme",
+  "homepage": "https://github.com/Mamotromico/Mokuroku#readme",
   "devDependencies": {
     "electron-prebuilt": "^1.2.0"
   }
