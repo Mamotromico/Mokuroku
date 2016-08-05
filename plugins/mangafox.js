@@ -81,6 +81,8 @@ function getMangaData () {
 }
 
 //Download every image on the chapter and save to system
-function downloadChapter () {
-
+function downloadChapter (url, path, numPages) {
+  for (var curPage = 1; curPage <= numPages; curPage++) {
+    REQUEST(url).pipe(FS.createWriteStream(path+curPage+'.jpg'));
+  }
 }
