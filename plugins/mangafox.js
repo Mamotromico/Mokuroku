@@ -1,3 +1,4 @@
+require('map.prototype.tojson');
 var request     = require('request');
 var cheerio     = require('cheerio');
 var URL         = require('url-parse');
@@ -11,14 +12,20 @@ function getCompleteMangaList () {
       return;
     }
     var $ = cheerio.load(body);
-    var mangaLinkList = new Set();
+    var mangaLinkList = new Map();
     $('.manga_open').each(function() {
+      console.log(this);
       console.log(this.attribs.href);
-      mangaLinkList.add(this.attribs.href);
+      mangaLinkList.set($(this).text(),this.attribs.href);
     });
-    var tempArray = Array.from(mangaLinkList);
-    var jsonList = JSON.stringify(tempArray);
+    var jsonList = mangaLinkList.toJSON();
     console.log(jsonList);
+    fs.writeFile("MangafoxList.json", JSON.stringify(jsonList), function (err) {
+      if(err){
+        console.log("An error ocurred creating the Mangafox file "+ err.message);
+      }
+      console.log("Mangafox list has been succesfully saved");
+    });
   });
 }
 
