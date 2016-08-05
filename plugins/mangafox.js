@@ -29,6 +29,10 @@ function getCompleteMangaList () {
   });
 }
 
+function readCompleteMangaList() {
+  
+}
+
 //Get manga page. Use name as a search term? not sure yet
 function getManga () {
 
