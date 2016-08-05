@@ -5,7 +5,21 @@ var fs          = require('fs');
 
 //Get every manga available on the site. Not sure if it should be used/needed
 function getCompleteMangaList () {
-
+  request('http://mangafox.me/manga/', function(error, response, body) {
+    if (response.statusCode !== 200) {
+      console.log("Error loading manga list, code "+ response.statusCode);
+      return;
+    }
+    var $ = cheerio.load(body);
+    var mangaLinkList = new Set();
+    $('.manga_open').each(function() {
+      console.log(this.attribs.href);
+      mangaLinkList.add(this.attribs.href);
+    });
+    var tempArray = Array.from(mangaLinkList);
+    var jsonList = JSON.stringify(tempArray);
+    console.log(jsonList);
+  });
 }
 
 //Get manga page. Use name as a search term? not sure yet
@@ -23,13 +37,13 @@ function getChapterList (urlArg) {
       return;
     }
     var $ = cheerio.load(body);
-    var linkList = new Set();
+    var chapLinkList = new Set();
 
     $('.chlist a').each(function() {
       console.log(this.attribs.href);
-      linkList.add(this.attribs.href);
+      chapLinkList.add(this.attribs.href);
     });
-    return linkList;
+    return chapLinkList;
   });
 }
 
