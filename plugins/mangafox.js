@@ -6,6 +6,7 @@ var fs          = require('fs');
 
 //Get every manga available on the site. Not sure if it should be used/needed
 function getCompleteMangaList () {
+  console.log("Downloadan");
   request('http://mangafox.me/manga/', function(error, response, body) {
     if (response.statusCode !== 200) {
       console.log("Error loading manga list, code "+ response.statusCode);
@@ -30,7 +31,23 @@ function getCompleteMangaList () {
 }
 
 function readCompleteMangaList() {
-  
+  fs.stat('MangafoxList.json', function (err, stats) {
+    if(err) {
+      console.log("Can't read mangafoxlist file, trying to fix");
+      getCompleteMangaList();
+      return;
+    }
+    if (stats.isFile()) {
+      fs.readFile('MangafoxList.json', 'utf8', function(err, data) {
+       if (err) {
+         console.log("Error reading mangafoxlist file: +" + err);
+         return;
+       }
+       console.log(JSON.parse(data));
+       console.log("Successfully read");
+      });
+    }
+  });
 }
 
 //Get manga page. Use name as a search term? not sure yet
