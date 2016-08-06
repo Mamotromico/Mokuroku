@@ -5,7 +5,6 @@ var REQUEST     = require('request');
 var CHEERIO     = require('cheerio');
 var URL         = require('url-parse');
 var FS          = require('fs');
-var HTTP        = require('http');
 
 //Get every manga available on the site. Not sure if it should be used/needed
 function getCompleteMangaList (fixing = false) {
