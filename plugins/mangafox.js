@@ -80,14 +80,38 @@ function getMangaData () {
 
 }
 
-//Download every image on the chapter and save to system
+//Download every image on the chapter and save to system on path
 function downloadChapter (url, path) {
   REQUEST(url, function(error, response, body) {
     $ = CHEERIO.load(body);
-    var numPages = $('.mangaread-page').size();
-    for (var curPage = 1; curPage <= numPages; curPage++) {
-      REQUEST(url).pipe(FS.createWriteStream(path+curPage+'.jpg'));
-    }
+    var numPages = $('.mangaread-page option').length;
+    console.log("Number of pages: "+numPages);
+    var pagesLinksArr = [];
+    $('.mangaread-page option').each(function () {
+      console.log($(this).val());
+      pagesLinksArr.push($(this).val());
+    });
+    curPage = 1;
+    pagesLinksArr.forEach(function (item, index, array) {
+      downloadPage(item, path, ("00"+curPage).slice(-3));
+      curPage++;
+    });
   });
+}
 
+function downloadPage (url, fPath, fileName) {
+  REQUEST(url, function (er, rp, bd) {
+    if (er) {
+      console.log(er);
+      return;
+    }
+    if (rp.statusCode !== 200) {
+      console.log("Error on page load:"+rp.statusCode);
+      return;
+    }
+    $ = CHEERIO.load(bd);
+    url = $('#image').attr('src');
+    console.log(url);
+    REQUEST(url).pipe(FS.createWriteStream(fPath+fileName+'.jpg'));
+  });
 }
