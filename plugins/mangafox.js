@@ -71,11 +71,6 @@ function readCompleteMangaList(fixed = false) {
   });
 }
 
-//Get manga page. Use name as a search term? not sure yet
-function getManga () {
-
-}
-
 //Get every chapter available from the manga
 //Returns a javascript Set() with all links (href)
 function getChapterList (urlArg) {
