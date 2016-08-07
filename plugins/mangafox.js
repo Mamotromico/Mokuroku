@@ -97,12 +97,6 @@ function getChapterList (urlArg) {
   });
 }
 
-//Get manga metada available.
-//Ideally it should crossreference mangaupdates for more complete metadata
-function getMangaData () {
-
-}
-
 //Download every image on the chapter and save to system on path
 function downloadChapter (urlArg, path) {
 
