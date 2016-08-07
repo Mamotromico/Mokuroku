@@ -1,6 +1,6 @@
 {
   "name": "mokuroku",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "A manga catalogue",
   "main": "main.js",
   "scripts": {
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Mamotromico/Mokuroku#readme",
   "devDependencies": {
+    "devtron": "^1.3.0",
     "electron-prebuilt": "^1.2.0"
   },
   "dependencies": {
