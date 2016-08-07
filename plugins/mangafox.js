@@ -143,3 +143,16 @@ function downloadPage (url, fPath, fileName) {
     REQUEST(url).pipe(FS.createWriteStream(fPath+fileName+'.jpg'));
   });
 }
+
+/*
+███████ ██   ██ ██████   ██████  ██████  ████████ ███████
+██       ██ ██  ██   ██ ██    ██ ██   ██    ██    ██
+█████     ███   ██████  ██    ██ ██████     ██    ███████
+██       ██ ██  ██      ██    ██ ██   ██    ██         ██
+███████ ██   ██ ██       ██████  ██   ██    ██    ███████
+*/
+
+module.exports.getCompleteMangaList = getCompleteMangaList;
+module.exports.readCompleteMangaList = readCompleteMangaList;
+module.exports.getChapterList = getChapterList;
+module.exports.downloadChapter = downloadChapter;
