@@ -23,19 +23,27 @@ ReactDOM.render(
 );
 
 function updateMangafox () {
+  console.time("one");
   MANGAFOX.readCompleteMangaList(false, function(parsedJson) {
+    console.timeEnd("one");
     mangafoxList = parsedJson;
+    console.time("two");
     var mangafoxItemElements = mangafoxList.map(function(mangafoxItemElement) {
       return React.createElement(MangaItem, mangafoxItemElement);
     });
+    console.timeEnd("two");
+    console.time("three");
     var newRootElement =
       React.createElement('div', {className: ""},
         React.createElement('button', {type:  "button", onClick : updateMangafox}, "get list"),
         React.createElement('ul', {}, mangafoxItemElements)
       );
+      console.timeEnd("three");
+      console.time("four");
     ReactDOM.render(
       newRootElement,
       document.getElementById('appRoot')
     );
+    console.timeEnd("four");
   });
 }
