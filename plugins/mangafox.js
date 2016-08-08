@@ -7,7 +7,7 @@ var URL         = require('url-parse');
 var FS          = require('fs');
 
 //Get every manga available on the site. Not sure if it should be used/needed
-function getCompleteMangaList (fixing = false) {
+function getCompleteMangaList (fixing = false, callback = null) {
   console.log("Downloadan");
 
   //Request the manga directory. This will probably always be hardcoded
@@ -38,7 +38,7 @@ function getCompleteMangaList (fixing = false) {
       console.log("Mangafox list has been succesfully saved");
       //If this call was made while trying to read a list that don't exist yet
       if (fixing) {
-        readCompleteMangaList(true);
+        readCompleteMangaList(true, callback);
       }
     });
   });
@@ -54,7 +54,7 @@ function readCompleteMangaList(fixed = false, callback = null) {
         return;
       }
       console.log("Can't read mangafoxlist file, trying to fix");
-      getCompleteMangaList();
+      getCompleteMangaList(true, callback);
       return;
     }
     //Confirm its a file and read it
