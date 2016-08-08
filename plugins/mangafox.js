@@ -1,13 +1,13 @@
 /*jshint esversion: 6 */
 
-require('map.prototype.tojson');
+var UTIL        = require('./../js/utils');
 var REQUEST     = require('request');
 var CHEERIO     = require('cheerio');
 var URL         = require('url-parse');
 var FS          = require('fs');
 
 //Get every manga available on the site. Not sure if it should be used/needed
-function getCompleteMangaList (fixing = false) {
+function getCompleteMangaList (fixing = false, callback = null) {
   console.log("Downloadan");
 
   //Request the manga directory. This will probably always be hardcoded
@@ -20,11 +20,14 @@ function getCompleteMangaList (fixing = false) {
 
     //Create a map with all manga names and URL, then turn them into a json object
     var $ = CHEERIO.load(body);
-    var mangaLinkList = new Map();
-    $('.manga_open').each(function() {
-      mangaLinkList.set($(this).text(),this.attribs.href);
+    var mangaLinkList = [];
+    var mangaKey = 1;
+    $('.series_preview').each(function() {
+      // mangaLinkList.set($(this).text(),this.attribs.href);
+      mangaLinkList.push({'key': mangaKey, 'name':$(this).text(), "url":this.attribs.href});
+      mangaKey++;
     });
-    var jsonList = mangaLinkList.toJSON();
+    var jsonList = mangaLinkList;
 
     //Write the json file to disk
     console.log(jsonList);
@@ -35,13 +38,13 @@ function getCompleteMangaList (fixing = false) {
       console.log("Mangafox list has been succesfully saved");
       //If this call was made while trying to read a list that don't exist yet
       if (fixing) {
-        readCompleteMangaList(true);
+        readCompleteMangaList(true, callback);
       }
     });
   });
 }
 
-function readCompleteMangaList(fixed = false) {
+function readCompleteMangaList(fixed = false, callback = null) {
   //Check if the mangafox file exists, if not it will download it.
   FS.stat('MangafoxList.json', function (err, stats) {
     if(err) {
@@ -51,7 +54,7 @@ function readCompleteMangaList(fixed = false) {
         return;
       }
       console.log("Can't read mangafoxlist file, trying to fix");
-      getCompleteMangaList();
+      getCompleteMangaList(true, callback);
       return;
     }
     //Confirm its a file and read it
@@ -61,10 +64,10 @@ function readCompleteMangaList(fixed = false) {
          console.log("Error reading mangafoxlist file: +" + err);
          return;
        }
-       //Return the JSON object properly parsed
-       console.log(JSON.parse(data));
+       //Return the JSON object properly parsed\
+       var parsedJson = JSON.parse(data);
        console.log("Successfully read");
-       return JSON.parse(data);
+       callback(parsedJson);
       });
     }
   });
@@ -143,3 +146,16 @@ function downloadPage (url, fPath, fileName) {
     REQUEST(url).pipe(FS.createWriteStream(fPath+fileName+'.jpg'));
   });
 }
+
+/*
+███████ ██   ██ ██████   ██████  ██████  ████████ ███████
+██       ██ ██  ██   ██ ██    ██ ██   ██    ██    ██
+█████     ███   ██████  ██    ██ ██████     ██    ███████
+██       ██ ██  ██      ██    ██ ██   ██    ██         ██
+███████ ██   ██ ██       ██████  ██   ██    ██    ███████
+*/
+
+module.exports.getCompleteMangaList = getCompleteMangaList;
+module.exports.readCompleteMangaList = readCompleteMangaList;
+module.exports.getChapterList = getChapterList;
+module.exports.downloadChapter = downloadChapter;
