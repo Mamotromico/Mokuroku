@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-require('map.prototype.tojson');
+var UTIL        = require('./../js/utils');
 var REQUEST     = require('request');
 var CHEERIO     = require('cheerio');
 var URL         = require('url-parse');
@@ -20,11 +20,14 @@ function getCompleteMangaList (fixing = false) {
 
     //Create a map with all manga names and URL, then turn them into a json object
     var $ = CHEERIO.load(body);
-    var mangaLinkList = new Map();
-    $('.manga_open').each(function() {
-      mangaLinkList.set($(this).text(),this.attribs.href);
+    var mangaLinkList = [];
+    var mangaKey = 1;
+    $('.series_preview').each(function() {
+      // mangaLinkList.set($(this).text(),this.attribs.href);
+      mangaLinkList.push({'key': mangaKey, 'name':$(this).text(), "url":this.attribs.href});
+      mangaKey++;
     });
-    var jsonList = mangaLinkList.toJSON();
+    var jsonList = mangaLinkList;
 
     //Write the json file to disk
     console.log(jsonList);
@@ -41,7 +44,7 @@ function getCompleteMangaList (fixing = false) {
   });
 }
 
-function readCompleteMangaList(fixed = false) {
+function readCompleteMangaList(fixed = false, callback = null) {
   //Check if the mangafox file exists, if not it will download it.
   FS.stat('MangafoxList.json', function (err, stats) {
     if(err) {
@@ -61,10 +64,10 @@ function readCompleteMangaList(fixed = false) {
          console.log("Error reading mangafoxlist file: +" + err);
          return;
        }
-       //Return the JSON object properly parsed
-       console.log(JSON.parse(data));
+       //Return the JSON object properly parsed\
+       var parsedJson = JSON.parse(data);
        console.log("Successfully read");
-       return JSON.parse(data);
+       callback(parsedJson);
       });
     }
   });
