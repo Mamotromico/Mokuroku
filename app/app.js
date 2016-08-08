@@ -1,9 +1,14 @@
 /*jshint esversion: 6 */
-var MANGAFOX = require('./../plugins/mangafox.js');
-var MangaItem = require( './components/mangaItem.component.js');
 
+//React cores
 var React = require('react');
 var ReactDOM = require('react-dom');
+
+//TODO: load these plugins dinamically
+var MANGAFOX = require('./../plugins/mangafox.js');
+
+//React Components
+var MangaItem = require( './components/mangaItem.component.js');
 
 var mangafoxList = [];
 
@@ -21,7 +26,7 @@ function updateMangafox () {
   MANGAFOX.readCompleteMangaList(false, function(parsedJson) {
     mangafoxList = parsedJson;
     var mangafoxItemElements = mangafoxList.map(function(mangafoxItemElement) {
-      return React.createElement(MangaItem(), mangafoxItemElement);
+      return React.createElement(MangaItem, mangafoxItemElement);
     });
     var newRootElement =
       React.createElement('div', {className: ""},
