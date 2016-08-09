@@ -12,55 +12,79 @@ var MANGAFOX = require('./../plugins/mangafox.js');
 
 
 var MangaListItem = React.createClass({
-  render: () {
-    React.createElement('li', { className: "manga-list-item"},
+  propTypes: {
+    name: React.PropTypes.string
+  },
+  render: function () {
+    return React.createElement('li', {className: "manga-list-item"},
       this.props.name
     );
   }
 });
 
 var MangaList = React.createClass({
-  var mangafoxList = [];
-  render() {
-    React.createElement('ul', {className: "manga-list"},
-      MangaListItem()
+  render: function() {
+    return React.createElement('ul', {className: "manga-list"},
+      React.createElement(MangaListItem, {name: "hey"}),
+      React.createElement(MangaListItem, {name: "whats"}),
+      React.createElement(MangaListItem, {name: "up"}),
+      React.createElement(MangaListItem, {name: "fam"})
     );
   }
 });
 
 var MangaListContainer = React.createClass({
-  render() {
-    React.createElement('div', {className: "manga-list-container"},
-      MangaList
+  render: function() {
+    return React.createElement('div', {className: "manga-list-container"},
+      React.createElement(MangaList)
     );
   }
 });
 
-var MangaOriginSelect = React.createElement('select', {className: "manga-list-origin-select"},
+var MangaOriginSelect = React.createClass({
+  render: function() {
+    return React.createElement('select', {className: "manga-list-origin-select"},
+      React.createElement('option', {value: "mangafox"}, "mangafox")
+    );
+  }
+});
 
-);
+var MangaBtnReadOrUpdate = React.createClass({
+  render: function() {
+    return React.createElement('button', {className: "manga-list-update"},
+     "F5"
+    );
+  }
+});
 
-var MangaBtnReadOrUpdate = React.createElement('button', {className: "manga-list-update"},
+var MangaListWrap = React.createClass({
+  render: function() {
+    return React.createElement('div', {className: "manga-list-wrap"},
+      React.createElement(MangaOriginSelect),
+      React.createElement(MangaBtnReadOrUpdate),
+      React.createElement(MangaListContainer)
+    );
+  }
+});
 
-);
+var DownloaderWrap = React.createClass({
+  render: function() {
+    return React.createElement('div', {className: "dl-wrap"},
+      React.createElement(MangaListWrap)
+    );
+  }
+});
 
-var MangaListWrap = React.createElement('div', {className: "manga-list-wrap"},
-  MangaOriginSelect,
-  MangaBtnReadOrUpdate,
-  MangaListContainer
-);
-
-var DownloaderWrap = React.createElement('div', {className: "dl-wrap"},
-  MangaListWrap
-);
-
-var AppRoot = React.createElement('div', {className: 'app'},
-  DownloaderWrap
-);
-
+var AppRoot = React.createClass({
+  render: function() {
+    return React.createElement('div', {className: "app"},
+      React.createElement(DownloaderWrap)
+    );
+  }
+});
 
 ReactDOM.render(
-  appRoot,
+  React.createElement(AppRoot),
   document.getElementById('appRoot')
 );
 
