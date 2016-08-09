@@ -10,7 +10,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      React.createElement('li', {},
+      React.createElement('li', {className: "manga-item"},
         React.createElement('button', {type: "button", onClick: this.onClick}, this.props.name)
       )
     );

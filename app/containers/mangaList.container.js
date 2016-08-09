@@ -12,7 +12,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      React.createElement('div', {className: 'mangalist'},
+      React.createElement('div', {className: 'manga-list'},
         mangaList.forEach(function(mangaPair) {
           React.createElement(MangaItem, mangaPair);
         })
