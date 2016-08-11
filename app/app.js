@@ -4,34 +4,20 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-//TODO: load these plugins dinamically
+//TODO:10 Load these plugins dinamically
 var MANGAFOX = require('./../plugins/mangafox.js');
 
+var sourceList = new Map();
+sourceList.set('mangafox', MANGAFOX);
+
 //React Components
+require('./components/MangaItem.component.js');
+
 // var MangaItem = require( './components/mangaItem.component.js');
 
 
 MANGAFOX.readCompleteMangaList(false, function (parsedJson) {
   mangaListJson = parsedJson;
-});
-
-var MangaListItem = React.createClass({
-  propTypes: {
-    name: React.PropTypes.string
-  },
-  render: function () {
-    var divStyle = {
-      boxSizing: 'border-box',
-      flex: '1 0 auto',
-      backgroundColor: '#b5e0cd',
-      padding: '2px',
-      margin: '2px'
-    };
-    console.log(this.props.name);
-    return React.createElement('div', {style: divStyle, className: "manga-list-item"},
-      this.props.name
-    );
-  }
 });
 
 var MangaList = React.createClass({
@@ -132,12 +118,6 @@ var MangaButtonsWrap = React.createClass({
 });
 
 var MangaListWrap = React.createClass({
-  getInitialState: function() {
-    return {
-      mangaListJson: [],
-      filterText: ''
-    };
-  },
   render: function() {
     var divStyle = {
       boxSizing: 'border-box',
@@ -151,6 +131,29 @@ var MangaListWrap = React.createClass({
       React.createElement(MangaListFilterBox),
       React.createElement(MangaListContainer)
     );
+  }
+});
+
+var MangaListWrapContainer = React.createClass({
+  getInitialState: function() {
+    return {
+      selectedWebsite: '',
+      mangaListJson: [],
+      filterText: ''
+    };
+  },
+  handleFilterChange: function(newFilter) {
+    this.changeState({
+      filterText: newFilter
+    });
+  },
+  updateMangaList: function(source) {
+    sourceList.get(source).getCompleteMangaList(false, function (parsedJson) {
+      this.changeState({mangaListJson: parsedJson});
+    });
+  },
+  render: function() {
+    return React.createElement(MangaListWrap);
   }
 });
 
