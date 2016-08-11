@@ -1,7 +1,7 @@
 var React = require('react');
 var PropTypes = React.PropTypes;
 
-module.exports = React.createClass({
+ MangaListItem = React.createClass({
   propTypes: {
     name: React.PropTypes.string
   },
@@ -13,9 +13,10 @@ module.exports = React.createClass({
       padding: '2px',
       margin: '2px'
     };
-    console.log(this.props.name);
     return React.createElement('div', {style: divStyle, className: "manga-list-item"},
       this.props.name
     );
   }
 });
+
+module.exports = MangaListItem;

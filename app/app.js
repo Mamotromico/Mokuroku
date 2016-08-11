@@ -11,7 +11,7 @@ var sourceList = new Map();
 sourceList.set('mangafox', MANGAFOX);
 
 //React Components
-require('./components/mangaItem.component.js');
+require('./components/MangaListItem.component.js');
 
 // var MangaItem = require( './components/mangaItem.component.js');
 

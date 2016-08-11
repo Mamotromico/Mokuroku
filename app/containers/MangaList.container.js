@@ -1,7 +1,7 @@
 React = require('react');
 MangaItem = require('./../components/mangaItem.js');
 
-module.exports = React.createClass({
+MangaList = React.createClass({
   propTypes: {
 
   },
@@ -20,3 +20,5 @@ module.exports = React.createClass({
     );
   }
 });
+
+module.exports = MangaList;
