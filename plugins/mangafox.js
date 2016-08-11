@@ -24,13 +24,12 @@ function getCompleteMangaList (fixing = false, callback = null) {
     var mangaKey = 1;
     $('.series_preview').each(function() {
       // mangaLinkList.set($(this).text(),this.attribs.href);
-      mangaLinkList.push({'key': mangaKey, 'name':$(this).text(), "url":this.attribs.href});
+      mangaLinkList.push({'key': mangaKey.toString(), 'name':$(this).text(), "url":this.attribs.href});
       mangaKey++;
     });
     var jsonList = mangaLinkList;
 
     //Write the json file to disk
-    console.log(jsonList);
     FS.writeFile("MangafoxList.json", JSON.stringify(jsonList), function (err) {
       if(err){
         console.log("An error ocurred creating the Mangafox file "+ err.message);
@@ -41,6 +40,7 @@ function getCompleteMangaList (fixing = false, callback = null) {
         readCompleteMangaList(true, callback);
       }
     });
+    console.log("download done");
   });
 }
 
@@ -67,7 +67,9 @@ function readCompleteMangaList(fixed = false, callback = null) {
        //Return the JSON object properly parsed\
        var parsedJson = JSON.parse(data);
        console.log("Successfully read");
-       callback(parsedJson);
+       if(callback) {
+         callback(parsedJson);
+       } 
       });
     }
   });
