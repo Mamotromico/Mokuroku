@@ -36,6 +36,11 @@ var MangaListItem = React.createClass({
 });
 
 var MangaList = React.createClass({
+  getInitialState: function() {
+    return {
+      mangaListJson: [];
+    }
+  }
   render: function() {
     var divStyle = {
       boxSizing: 'border-box',
@@ -48,23 +53,21 @@ var MangaList = React.createClass({
       backgroundColor: '#1aac9f',
       overflow: 'auto'
     }
+    var mangafoxItemElements = this.props.list.map(function(mangafoxItemElement) {
+      return React.createElement(MangaListItem, mangafoxItemElement);
+    });
     return React.createElement('div', {style: divStyle, className: "manga-list"},
-      React.createElement(MangaListItem, {name: "hey"}),
-      React.createElement(MangaListItem, {name: "whats"}),
-      React.createElement(MangaListItem, {name: "up"}),
-      React.createElement(MangaListItem, {name: "fam"})
+      mangafoxItemElements
     );
   }
 });
 
+// MangaListItem, {name: currentValue.name}
+
 var MangaListContainer = React.createClass({
   render: function() {
-    var divStyle = {
-
-    }
-    return React.createElement('div', {style: divStyle, className: "manga-list-container"},
-      React.createElement(MangaList)
-    );
+    var temp = [];
+    return React.createElement(MangaList, { list: temp });
   }
 });
 
@@ -97,7 +100,12 @@ var MangaBtnReadOrUpdate = React.createClass({
   }
 });
 
-var MangaListWrap = React.createClass({
+var MangaListFilterBox = React.createClass({
+  getInitialState: function() {
+    return {
+      filterText: '',
+    }
+  }
   render: function() {
     var divStyle = {
       boxSizing: 'border-box',
