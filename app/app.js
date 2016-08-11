@@ -10,6 +10,12 @@ var MANGAFOX = require('./../plugins/mangafox.js');
 //React Components
 // var MangaItem = require( './components/mangaItem.component.js');
 
+
+MANGAFOX.readCompleteMangaList(false, function (parsedJson) {
+  mangaListJson = parsedJson;
+  console.log("get");
+});
+
 var MangaListItem = React.createClass({
   propTypes: {
     name: React.PropTypes.string
