@@ -1,5 +1,7 @@
 /*jshint esversion: 6 */
 
+//TODO:0 Refactor with promises
+
 var UTIL        = require('./../js/utils');
 var REQUEST     = require('request');
 var CHEERIO     = require('cheerio');
@@ -69,7 +71,7 @@ function readCompleteMangaList(fixed = false, callback = null) {
        console.log("Successfully read");
        if(callback) {
          callback(parsedJson);
-       } 
+       }
       });
     }
   });
