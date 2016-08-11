@@ -46,6 +46,51 @@ function getCompleteMangaList (fixing = false, callback = null) {
   });
 }
 
+//Promise version
+function getCompleteMangaListPromise (fixing = false) {
+  console.log("Downloadan");
+  return new Promise(function(resolve, reject) {
+
+    //Request the manga directory. This will probably always be hardcoded
+    REQUEST('http://mangafox.me/manga/', function(error, response, body) {
+      //Treat request error
+      if (error) {
+        return reject(error);
+      }
+      if (response.statusCode !== 200) {
+        console.log("Error loading manga list, code "+ response.statusCode);
+        return reject(response.statusCode);
+      }
+
+      //Create a map with all manga names and URL, then turn them into a json object
+      var $ = CHEERIO.load(body);
+      var mangaLinkList = [];
+      var mangaKey = 1;
+      $('.series_preview').each(function() {
+        // mangaLinkList.set($(this).text(),this.attribs.href);
+        mangaLinkList.push({'key': mangaKey.toString(), 'name':$(this).text(), "url":this.attribs.href});
+        mangaKey++;
+      });
+      var jsonList = mangaLinkList;
+
+      //Write the json file to disk
+      FS.writeFile("MangafoxList.json", JSON.stringify(jsonList), function (err) {
+        if(err){
+          console.log("An error ocurred creating the Mangafox file "+ err.message);
+        }
+        console.log("Mangafox list has been succesfully saved");
+        //If this call was made while trying to read a list that don't exist yet
+        if (fixing) {
+          readCompleteMangaList(true, callback);
+        }
+      });
+      console.log("download done");
+      resolve();
+    });
+
+  });
+}
+
 function readCompleteMangaList(fixed = false, callback = null) {
   //Check if the mangafox file exists, if not it will download it.
   FS.stat('MangafoxList.json', function (err, stats) {
@@ -74,6 +119,41 @@ function readCompleteMangaList(fixed = false, callback = null) {
        }
       });
     }
+  });
+}
+
+//Promise version
+function readCompleteMangaListPromise(fixed = false) {
+  return new Promise(function(resolve, reject) {
+    //Check if the mangafox file exists, if not it will download it.
+    FS.stat('MangafoxList.json', function (err, stats) {
+      if(err) {
+        //If already tried to fix the file by downloading it and got another error
+        if(fixed) {
+          console.log("Can't read file again, please report: "+ err);
+          reject(err);
+          return;
+        }
+        console.log("Can't read mangafoxlist file, trying to fix");
+        getCompleteMangaListPromise(true);
+        reject(err);
+        return;
+      }
+      //Confirm its a file and read it
+      if (stats.isFile()) {
+        FS.readFile('MangafoxList.json', 'utf8', function(err, data) {
+         if (err) {
+           console.log("Error reading mangafoxlist file: +" + err);
+           reject(err);
+           return;
+         }
+         //Return the JSON object properly parsed\
+         var parsedJson = JSON.parse(data);
+         console.log("Successfully read");
+         resolve(parsedJson);
+        });
+      }
+    });
   });
 }
 
@@ -161,5 +241,7 @@ function downloadPage (url, fPath, fileName) {
 
 module.exports.getCompleteMangaList = getCompleteMangaList;
 module.exports.readCompleteMangaList = readCompleteMangaList;
+module.exports.getCompleteMangaListPromise = getCompleteMangaListPromise;
+module.exports.readCompleteMangaListPromise = readCompleteMangaListPromise;
 module.exports.getChapterList = getChapterList;
 module.exports.downloadChapter = downloadChapter;
