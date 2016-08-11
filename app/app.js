@@ -16,8 +16,13 @@ var MangaListItem = React.createClass({
   },
   render: function () {
     var divStyle = {
-      backgroundColor: 'blue'
+      boxSizing: 'border-box',
+      flex: '1 0 auto',
+      backgroundColor: '#b5e0cd',
+      padding: '2px',
+      margin: '2px'
     }
+    console.log(this.props.name);
     return React.createElement('div', {style: divStyle, className: "manga-list-item"},
       this.props.name
     );
@@ -27,7 +32,15 @@ var MangaListItem = React.createClass({
 var MangaList = React.createClass({
   render: function() {
     var divStyle = {
-      backgroundColor: 'green'
+      boxSizing: 'border-box',
+      display: 'flex',
+      flex: '1 1 auto',
+      padding: '2px',
+      width: '400px',
+      flexDirection: 'column',
+      alignItems: 'stretch',
+      backgroundColor: '#1aac9f',
+      overflow: 'auto'
     }
     return React.createElement('div', {style: divStyle, className: "manga-list"},
       React.createElement(MangaListItem, {name: "hey"}),
@@ -52,9 +65,12 @@ var MangaListContainer = React.createClass({
 var MangaOriginSelect = React.createClass({
   render: function() {
     var divStyle = {
-
+      boxSizing: 'border-box',
+      display: 'flex',
+      flex: '1 0 auto',
+      padding: '2px',
     }
-    return React.createElement('select', {className: "manga-list-origin-select"},
+    return React.createElement('select', {style: divStyle, className: "manga-list-origin-select"},
       React.createElement('option', {value: "mangafox"}, "mangafox")
     );
   }
@@ -63,9 +79,13 @@ var MangaOriginSelect = React.createClass({
 var MangaBtnReadOrUpdate = React.createClass({
   render: function() {
     var divStyle = {
-
+      boxSizing: 'border-box',
+      display: 'flex',
+      padding: '2px',
+      width: '40px',
+      contentAlign: 'center'
     }
-    return React.createElement('button', {className: "manga-list-update"},
+    return React.createElement('button', {style: divStyle, className: "manga-list-update"},
      "F5"
     );
   }
@@ -74,11 +94,52 @@ var MangaBtnReadOrUpdate = React.createClass({
 var MangaListWrap = React.createClass({
   render: function() {
     var divStyle = {
-
+      boxSizing: 'border-box',
+      display: 'flex',
+      padding: '2px',
+      flex: '0 0 auto'
     }
-    return React.createElement('div', {className: "manga-list-wrap"},
+    return React.createElement('div',{className: 'manga-list-filter', style: divStyle},
+      React.createElement('div', {style: {
+                                          flex:'0 0 auto',
+                                          backgroundColor: 'rgba(249, 112, 178, 0.61)',
+                                          boxSizing: 'border-box',
+                                          padding: '2px'
+                                        },
+                                  className: 'manga-list-filter-text'}, 'Filter'),
+      React.createElement('input',{className: 'manga-list-filter-box', style: {boxSizing: 'border-box',flex:'1 0 auto'}, type: 'text'},null)
+    );
+  }
+});
+
+var MangaButtonsWrap = React.createClass({
+  render: function() {
+    var divStyle = {
+      boxSizing: 'border-box',
+      display: 'flex',
+      flex: '0 0 auto',
+      padding: '2px',
+      backgroundColor: 'rgb(19, 194, 63)'
+    }
+    return React.createElement('div', { style: divStyle, className: "manga-btn-wrap"},
       React.createElement(MangaOriginSelect),
-      React.createElement(MangaBtnReadOrUpdate),
+      React.createElement(MangaBtnReadOrUpdate)
+    );
+  }
+});
+
+var MangaListWrap = React.createClass({
+  render: function() {
+    var divStyle = {
+      boxSizing: 'border-box',
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: '#1b6bd5',
+      padding: '10px'
+    }
+    return React.createElement('div', {style: divStyle, className: "manga-list-wrap", list: this.props.list},
+      React.createElement(MangaButtonsWrap),
+      React.createElement(MangaListFilterBox),
       React.createElement(MangaListContainer)
     );
   }
@@ -87,8 +148,15 @@ var MangaListWrap = React.createClass({
 var DownloaderWrap = React.createClass({
   render: function() {
     var divStyle = {
-      backgroundColor: 'red'
+      boxSizing: 'border-box',
+      display: 'flex',
+      flexDirection: 'row',
+      flex: '1',
+      marginTop: '40px',
+      backgroundColor: 'rgb(205, 86, 86)',
+      padding: '2px',
     }
+
     return React.createElement('div', {style: divStyle, className: "dl-wrap"},
       React.createElement(MangaListWrap)
     );
@@ -98,9 +166,18 @@ var DownloaderWrap = React.createClass({
 var AppRoot = React.createClass({
   render: function() {
     var divStyle = {
-
+      boxSizing: 'border-box',
+      display: 'flex',
+      alignItems: 'stretch',
+      alignContent: 'stretch',
+      padding: '2px',
+      backgroundColor: '#d5bc15',
+      width: '100vw',
+      minWidth: '100vw',
+      height: '100vh',
+      minHeigth: '100vh'
     }
-    return React.createElement('div', {className: "app"},
+    return React.createElement('div', {style: divStyle, className: "appRoot"},
       React.createElement(DownloaderWrap)
     );
   }
@@ -108,7 +185,7 @@ var AppRoot = React.createClass({
 
 ReactDOM.render(
   React.createElement(AppRoot),
-  document.getElementById('appRoot')
+  document.getElementById('app')
 );
 
 // function updateMangafox () {
