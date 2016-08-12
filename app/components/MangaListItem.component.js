@@ -1,7 +1,6 @@
-var React = require('react');
-var PropTypes = React.PropTypes;
+React = require('react');
 
- MangaListItem = React.createClass({
+MangaListItem = React.createClass({
   propTypes: {
     name: React.PropTypes.string
   },

@@ -13,91 +13,12 @@ sourceList.set('mangafox', MANGAFOX);
 
 //React Components
 require('./components/MangaListItem.component.js');
+require('./components/MangaList.component.js');
+require('./components/MangaOriginSelect.component.js');
+require('./components/MangaButtonReadOrUpdate.component.js');
 
-// var MangaItem = require( './components/mangaItem.component.js');
 
 
-MANGAFOX.readCompleteMangaList(false, function (parsedJson) {
-  mangaListJson = parsedJson;
-});
-
-var MangaList = React.createClass({
-  propTypes: {
-    mangaListJson: React.PropTypes.array.isRequired
-  },
-  render: function() {
-    var divStyle = {
-      boxSizing: 'border-box',
-      display: 'flex',
-      flex: '1 1 auto',
-      padding: '2px',
-      width: '400px',
-      flexDirection: 'column',
-      alignItems: 'stretch',
-      backgroundColor: '#1aac9f',
-      overflow: 'auto'
-    };
-    var mangafoxItemElements = this.props.mangaListJson.map(function(mangafoxItemElement) {
-      return React.createElement(MangaListItem, mangafoxItemElement);
-    });
-    return React.createElement('div', {style: divStyle, className: "manga-list"},
-      mangafoxItemElements
-    );
-  }
-});
-
-// MangaListItem, {name: currentValue.name}
-
-var MangaListContainer = React.createClass({
-  propTypes: {
-    mangaListJson: React.PropTypes.array.isRequired
-  },
-  render: function() {
-    return React.createElement(MangaList, {mangaListJson: this.props.mangaListJson});
-  }
-});
-
-var MangaOriginSelect = React.createClass({
-  propTypes: {
-    handleSelectChange: React.PropTypes.func.isRequired
-  },
-  render: function() {
-    var divStyle = {
-      boxSizing: 'border-box',
-      display: 'flex',
-      flex: '1 0 auto',
-      padding: '2px'
-    };
-    return React.createElement('select', {style: divStyle,
-                                          className: "manga-list-origin-select",
-                                          onChange: this.props.handleSelectChange},
-      React.createElement('option', {value: "batoto"}, "batoto"),
-      React.createElement('option', {value: "mangafox"}, "mangafox")
-    );
-  }
-});
-
-var MangaBtnReadOrUpdate = React.createClass({
-  propTypes: {
-    updateMangaList: React.PropTypes.func.isRequired,
-    selectedWebsite: React.PropTypes.string
-  },
-  updateMangaListWithPropName: function (syntheticEvent) {
-    this.props.updateMangaList(this.props.selectedWebsite);
-  },
-  render: function() {
-    var divStyle = {
-      boxSizing: 'border-box',
-      display: 'flex',
-      padding: '2px',
-      width: '40px',
-      contentAlign: 'center'
-    };
-    return React.createElement('button', {style: divStyle, className: "manga-list-update", onClick: this.updateMangaListWithPropName},
-     "F5"
-    );
-  }
-});
 
 var MangaListFilterBox = React.createClass({
   render: function() {
@@ -138,7 +59,7 @@ var MangaButtonsWrap = React.createClass({
       React.createElement(MangaOriginSelect, {
                                               handleSelectChange: this.props.handleSelectChange
                                             }),
-      React.createElement(MangaBtnReadOrUpdate, {
+      React.createElement(MangaButtonReadOrUpdate, {
                                                   updateMangaList:  this.props.updateMangaList,
                                                   selectedWebsite: this.props.selectedWebsite
                                                 })
@@ -168,7 +89,7 @@ var MangaListWrap = React.createClass({
                                             selectedWebsite: this.props.selectedWebsite
                                           }),
       React.createElement(MangaListFilterBox),
-      React.createElement(MangaListContainer, {mangaListJson: this.props.mangaListJson})
+      React.createElement(MangaList, {mangaListJson: this.props.mangaListJson})
     );
   }
 });
