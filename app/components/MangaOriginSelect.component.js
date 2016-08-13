@@ -1,5 +1,3 @@
-React = require('react');
-
 MangaOriginSelect = React.createClass({
   propTypes: {
     handleSelectChange: React.PropTypes.func.isRequired

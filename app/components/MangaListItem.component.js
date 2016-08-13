@@ -1,5 +1,3 @@
-React = require('react');
-
 MangaListItem = React.createClass({
   propTypes: {
     name: React.PropTypes.string

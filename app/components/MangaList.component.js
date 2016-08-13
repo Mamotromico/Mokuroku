@@ -1,4 +1,3 @@
-React = require('react');
 MangaItem = require('./MangaListItem.component.js');
 
 MangaList = React.createClass({

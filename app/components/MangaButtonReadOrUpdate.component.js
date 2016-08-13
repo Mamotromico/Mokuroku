@@ -1,5 +1,3 @@
-React = require('react');
-
 MangaButtonReadOrUpdate = React.createClass({
   propTypes: {
     updateMangaList: React.PropTypes.func.isRequired,

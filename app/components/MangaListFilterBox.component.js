@@ -1,5 +1,3 @@
-React = require('react');
-
 MangaListFilterBox = React.createClass({
   render: function() {
     var divStyle = {
