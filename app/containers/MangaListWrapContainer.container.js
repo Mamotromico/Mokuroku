@@ -33,6 +33,8 @@ MangaListWrapContainer = React.createClass({
     });
   },
   updateMangaList: function updateMangaList(source) {
+    console.log(source);
+    console.log(sourceList.get(source));
     sourceList.get(source).getCompleteMangaList(false, function (parsedJson) {
       this.setState({
         selectedWebsite: this.state.selectedWebsite,

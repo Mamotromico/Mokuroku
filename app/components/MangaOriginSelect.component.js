@@ -12,7 +12,7 @@ MangaOriginSelect = React.createClass({
     return React.createElement('select', {style: divStyle,
                                           className: "manga-list-origin-select",
                                           onChange: this.props.handleSelectChange},
-      React.createElement('option', {value: "batoto"}, "batoto"),
+      React.createElement('option', {value: "mangareader"}, "mangareader"),
       React.createElement('option', {value: "mangafox"}, "mangafox")
     );
   }
