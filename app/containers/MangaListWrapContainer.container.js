@@ -1,9 +1,19 @@
 require('./../components/MangaListWrap.component.js');
 
+//TODO:10 Load these plugins dinamically
+var MANGAREADER = require('./../../plugins/mangareader.js');
+var MANGAFOX = require('./../../plugins/mangafox.js');
+
+
+//Name plugin pair
+var sourceList = new Map();
+sourceList.set('mangareader', MANGAREADER);
+sourceList.set('mangafox', MANGAFOX);
+
 MangaListWrapContainer = React.createClass({
   getInitialState: function() {
     return {
-      selectedWebsite: '',
+      selectedWebsite: 'mangareader',
       mangaListJson: [],
       filterText: ''
     };
