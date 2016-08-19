@@ -27,7 +27,6 @@ MangaListWrapContainer = React.createClass({
   },
   handleSelectChange: function(newOption) {
     var newSourceWebsite = newOption.target.value;
-    console.log(newSourceWebsite);
     var bindThis = this;
     sourceList.get(newSourceWebsite).readCompleteMangaListPromise(false)
     .then(function(parsedJson) {
@@ -43,8 +42,6 @@ MangaListWrapContainer = React.createClass({
     });
   },
   updateMangaList: function updateMangaList(source) {
-    console.log(source);
-    console.log(sourceList.get(source));
     sourceList.get(source).getCompleteMangaList(false, function (parsedJson) {
       this.setState({
         selectedWebsite: this.state.selectedWebsite,
