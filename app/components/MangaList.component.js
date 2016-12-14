@@ -1,4 +1,4 @@
-// MangaItem = require('./MangaListItem.component.js');
+MangaItem = require('./MangaListItem.component.js');
 
 MangaList = React.createClass({
   propTypes: {
@@ -16,11 +16,11 @@ MangaList = React.createClass({
       backgroundColor: '#1aac9f',
       overflow: 'auto'
     };
-    var mangafoxItemElements = this.props.mangaListJson.map(function(mangafoxItemElement) {
-      return React.createElement(MangaListItem, mangafoxItemElement);
+    var mangaItemElements = this.props.mangaListJson.map(function(mangaItemElement) {
+      return React.createElement(MangaListItem, mangaItemElement);
     });
     return React.createElement('div', {style: divStyle, className: "manga-list"},
-      mangafoxItemElements
+      mangaItemElements
     );
   }
 });
