@@ -1,8 +1,7 @@
-// MangaItem = require('./MangaListItem.component.js');
 
-MangaList = React.createClass({
+ChapterList = React.createClass({
   propTypes: {
-    mangaListJson: React.PropTypes.array.isRequired
+    chapterListJson: React.PropTypes.array.isRequired
   },
   render: function() {
     var divStyle = {
@@ -16,8 +15,8 @@ MangaList = React.createClass({
       backgroundColor: '#1aac9f',
       overflow: 'auto'
     };
-    var mangafoxItemElements = this.props.mangaListJson.map(function(mangafoxItemElement) {
-      return React.createElement(MangaListItem, mangafoxItemElement);
+    var chapterItemElements = this.props.mangaListJson.map(function(mangafoxItemElement) {
+      return React.createElement(ChapterListItem, mangafoxItemElement);
     });
     return React.createElement('div', {style: divStyle, className: "manga-list"},
       mangafoxItemElements
@@ -25,4 +24,4 @@ MangaList = React.createClass({
   }
 });
 
-module.exports = MangaList;
+module.exports = ChapterList;

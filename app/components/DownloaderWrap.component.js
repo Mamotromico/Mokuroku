@@ -1,4 +1,5 @@
 require('./../containers/MangaListWrapContainer.container.js');
+require('./../containers/ChapterListWrapContainer.container.js');
 
 DownloaderWrap = React.createClass({
   render: function() {
@@ -13,7 +14,8 @@ DownloaderWrap = React.createClass({
     };
 
     return React.createElement('div', {style: divStyle, className: "dl-wrap"},
-      React.createElement(MangaListWrapContainer)
+      React.createElement(MangaListWrapContainer),
+      React.createElement(ChapterListWrapContainer)
     );
   }
 });
