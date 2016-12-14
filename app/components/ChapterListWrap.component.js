@@ -1,4 +1,4 @@
-require ("./../components/ChapterList.component.js")
+require ("./../components/ChapterList.component.js");
 
 ChapterListWrap = React.createClass({
   propTypes: {
@@ -13,8 +13,8 @@ ChapterListWrap = React.createClass({
       padding: '10px'
     };
 
-    return React.createElement('div', {style: divStyle, className: "chapter-list-wrap", list: this.props.list},
-      React.createElement(ChapterList, {chapterListJson: this.props.chapterListJson})
+    return React.createElement('div', {style: divStyle, className: "chapter-list-wrap", list: this.props.list}
+      // React.createElement(ChapterList, {chapterListJson: this.props.chapterListJson})
     );
   }
 });

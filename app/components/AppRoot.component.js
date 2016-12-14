@@ -1,4 +1,4 @@
-require('./DownloaderWrap.component.js');
+require('./../containers/DownloaderWrapContainer.container.js');
 
 AppRoot = React.createClass({
   render: function() {
@@ -15,7 +15,7 @@ AppRoot = React.createClass({
       minHeigth: '100vh'
     };
     return React.createElement('div', {style: divStyle, className: "appRoot"},
-      React.createElement(DownloaderWrap)
+      React.createElement(DownloaderWrapContainer)
     );
   }
 });

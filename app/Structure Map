@@ -1,0 +1,18 @@
+App Root
+  DownloaderWrapContainer
+    DownloaderWrap
+      MangaListWrapContainer
+        MangaListWrap
+          MangaButtonsWrap
+            MangaOriginSelect
+            MangaButtonReadOrUpdate
+          MangaListFilterBox
+          MangaList
+            n MangaListItem
+      ChapterListWrapContainer
+        ChapterListWrap
+          ChapterButtonsWrap
+            ChapterButtonReadOrUpdate
+            ChapterListFilterBox
+          ChapterList
+            n ChapterListItem
