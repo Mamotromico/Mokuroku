@@ -1,4 +1,4 @@
-MangaItem = require('./MangaListItem.component.js');
+require('./MangaListItem.component.js');
 
 MangaList = React.createClass({
   propTypes: {

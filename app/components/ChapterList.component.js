@@ -15,11 +15,11 @@ ChapterList = React.createClass({
       backgroundColor: '#1aac9f',
       overflow: 'auto'
     };
-    var chapterItemElements = this.props.chapterListJson.map(function(chapterItemElement) {
-      return React.createElement(ChapterListItem, chapterItemElement);
-    });
-    return React.createElement('div', {style: divStyle, className: "chapter-list"},
-      chapterItemElements
+    // var chapterItemElements = this.props.chapterListJson.map(function(chapterItemElement) {*/
+    //   return React.createElement(ChapterListItem/*, chapterItemElement*/);
+    // });
+    return React.createElement('div', {style: divStyle, className: "chapter-list"}
+      // chapterItemElements
     );
   }
 });
