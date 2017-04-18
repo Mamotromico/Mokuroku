@@ -3,7 +3,9 @@ require ("./../components/ChapterButtonsWrap.component.js");
 
 ChapterListWrap = React.createClass({
   propTypes: {
-
+    updateChapterList: React.PropTypes.func.isRequired,
+    selectedManga: React.PropTypes.string,
+    chapterListJson: React.PropTypes.array.isRequired
   },
   render: function() {
     var divStyle = {

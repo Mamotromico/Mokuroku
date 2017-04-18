@@ -7,7 +7,7 @@ DownloaderWrapContainer = React.createClass({
     };
   },
   changeChapterList: function() {
-    
+
   },
   render:function() {
     return React.createElement(DownloaderWrap);
