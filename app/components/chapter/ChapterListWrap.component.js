@@ -1,5 +1,5 @@
-require ("./../components/ChapterList.component.js");
-require ("./../components/ChapterButtonsWrap.component.js");
+require ("./ChapterList.component.js");
+require ("./ChapterButtonsWrap.component.js");
 
 ChapterListWrap = React.createClass({
   propTypes: {

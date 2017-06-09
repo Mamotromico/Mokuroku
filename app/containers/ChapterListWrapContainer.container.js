@@ -1,4 +1,4 @@
-require('./../components/ChapterListWrap.component.js');
+require('./../components/chapter/ChapterListWrap.component.js');
 
 ChapterListWrapContainer = React.createClass({
   getInitialState: function() {
