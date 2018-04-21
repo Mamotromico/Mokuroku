@@ -13,7 +13,7 @@ function getCompleteMangaList (fixing = false, callback = null) {
   console.log("Downloadan");
 
   //Request the manga directory. This will probably always be hardcoded
-  REQUEST('http://mangafox.me/manga/', function(error, response, body) {
+  REQUEST('http://www.mangareader.net/alphabetical', function(error, response, body) {
     //Treat request error
     if (response.statusCode !== 200) {
       console.log("Error loading manga list, code "+ response.statusCode);
@@ -24,19 +24,19 @@ function getCompleteMangaList (fixing = false, callback = null) {
     var $ = CHEERIO.load(body);
     var mangaLinkList = [];
     var mangaKey = 1;
-    $('.series_preview').each(function() {
+    $('.series_alpha li a').each(function() {
       // mangaLinkList.set($(this).text(),this.attribs.href);
-      mangaLinkList.push({'key': mangaKey.toString(), 'name':$(this).text(), "url":this.attribs.href});
+      mangaLinkList.push({'key': mangaKey.toString(), 'name':$(this).text(), "url":'www.mangareader.net'+this.attribs.href});
       mangaKey++;
     });
     var jsonList = mangaLinkList;
 
     //Write the json file to disk
-    FS.writeFile("MangafoxList.json", JSON.stringify(jsonList), function (err) {
+    FS.writeFile("MangareaderList.json", JSON.stringify(jsonList), function (err) {
       if(err){
         console.log("An error ocurred creating the Mangafox file "+ err.message);
       }
-      console.log("Mangafox list has been succesfully saved");
+      console.log("Mangareader list has been succesfully saved");
       //If this call was made while trying to read a list that don't exist yet
       if (fixing) {
         readCompleteMangaList(true, callback);
@@ -52,7 +52,7 @@ function getCompleteMangaListPromise (fixing = false) {
   return new Promise(function(resolve, reject) {
 
     //Request the manga directory. This will probably always be hardcoded
-    REQUEST('http://mangafox.me/manga/', function(error, response, body) {
+    REQUEST('http://www.mangareader.net/alphabetical', function(error, response, body) {
       //Treat request error
       if (error) {
         return reject(error);
@@ -66,19 +66,19 @@ function getCompleteMangaListPromise (fixing = false) {
       var $ = CHEERIO.load(body);
       var mangaLinkList = [];
       var mangaKey = 1;
-      $('.series_preview').each(function() {
+      $('.series_alpha li a').each(function() {
         // mangaLinkList.set($(this).text(),this.attribs.href);
-        mangaLinkList.push({'key': mangaKey.toString(), 'name':$(this).text(), "url":this.attribs.href});
+        mangaLinkList.push({'key': mangaKey.toString(), 'name':$(this).text(), "url":'www.mangareader.net'+this.attribs.href});
         mangaKey++;
       });
       var jsonList = mangaLinkList;
 
       //Write the json file to disk
-      FS.writeFile("MangafoxList.json", JSON.stringify(jsonList), function (err) {
+      FS.writeFile("MangareaderList.json", JSON.stringify(jsonList), function (err) {
         if(err){
-          console.log("An error ocurred creating the Mangafox file "+ err.message);
+          console.log("An error ocurred creating the Mangareader file "+ err.message);
         }
-        console.log("Mangafox list has been succesfully saved");
+        console.log("Mangareader list has been succesfully saved");
         //If this call was made while trying to read a list that don't exist yet
         if (fixing) {
           readCompleteMangaList(true, callback);
@@ -93,22 +93,22 @@ function getCompleteMangaListPromise (fixing = false) {
 
 function readCompleteMangaList(fixed = false, callback = null) {
   //Check if the mangafox file exists, if not it will download it.
-  FS.stat('MangafoxList.json', function (err, stats) {
+  FS.stat('MangareaderList.json', function (err, stats) {
     if(err) {
       //If already tried to fix the file by downloading it and got another error
       if(fixed) {
         console.log("Can't read file again, please report: "+ err);
         return;
       }
-      console.log("Can't read mangafoxlist file, trying to fix");
+      console.log("Can't read mangareaderlist file, trying to fix");
       getCompleteMangaList(true, callback);
       return;
     }
     //Confirm its a file and read it
     if (stats.isFile()) {
-      FS.readFile('MangafoxList.json', 'utf8', function(err, data) {
+      FS.readFile('MangareaderList.json', 'utf8', function(err, data) {
        if (err) {
-         console.log("Error reading mangafoxlist file: +" + err);
+         console.log("Error reading mangareaderlist file: +" + err);
          return;
        }
        //Return the JSON object properly parsed\
@@ -126,7 +126,7 @@ function readCompleteMangaList(fixed = false, callback = null) {
 function readCompleteMangaListPromise(fixed = false) {
   return new Promise(function(resolve, reject) {
     //Check if the mangafox file exists, if not it will download it.
-    FS.stat('MangafoxList.json', function (err, stats) {
+    FS.stat('MangareaderList.json', function (err, stats) {
       if(err) {
         //If already tried to fix the file by downloading it and got another error
         if(fixed) {
@@ -134,16 +134,16 @@ function readCompleteMangaListPromise(fixed = false) {
           reject(err);
           return;
         }
-        console.log("Can't read mangafoxlist file, trying to fix");
+        console.log("Can't read mangareaderlist file, trying to fix");
         getCompleteMangaListPromise(true);
         reject(err);
         return;
       }
       //Confirm its a file and read it
       if (stats.isFile()) {
-        FS.readFile('MangafoxList.json', 'utf8', function(err, data) {
+        FS.readFile('MangareaderList.json', 'utf8', function(err, data) {
          if (err) {
-           console.log("Error reading mangafoxlist file: +" + err);
+           console.log("Error reading mangareaderlist file: +" + err);
            reject(err);
            return;
          }
@@ -161,9 +161,6 @@ function readCompleteMangaListPromise(fixed = false) {
 //Returns a javascript Set() with all links (href)
 function getChapterList (urlArg) {
 
-  //change to mobile URL
-  var url = urlArg.replace('http://ma', 'http://m.ma');
-
   //Request the manga page
   REQUEST(url, function (error, response, body) {
     //Error treatment
@@ -175,9 +172,9 @@ function getChapterList (urlArg) {
     //Create and fill the list with all chap links
     var $ = CHEERIO.load(body);
     var chapLinkList = new Set();
-    $('.chlist a').each(function() {
-      console.log(this.attribs.href);
-      chapLinkList.add(this.attribs.href);
+    $('#chapterlist a').each(function() {
+      console.log('www.mangareader.net'+this.attribs.href);
+      chapLinkList.add('www.mangareader.net'+this.attribs.href);
     });
 
     return chapLinkList;
@@ -187,21 +184,18 @@ function getChapterList (urlArg) {
 //Download every image on the chapter and save to system on path
 function downloadChapter (urlArg, path) {
 
-  //change to mobile URL
-  var url = urlArg.replace('http://ma', 'http://m.ma');
-
   //Page request
   REQUEST(url, function(error, response, body) {
     $ = CHEERIO.load(body);
 
     //Find the number of pages from the dropdown page list
-    var numPages = $('.mangaread-page option').length;
+    var numPages = $('#pageMenu option').length;
 
     //Create and fill an array with all the required page links
     var pagesLinksArr = [];
-    $('.mangaread-page option').each(function () {
-      console.log($(this).val());
-      pagesLinksArr.push($(this).val());
+    $('#pageMenu option').each(function () {
+      console.log('www.mangareader.net'+$(this).val());
+      pagesLinksArr.push('www.mangareader.net'+$(this).val());
     });
 
     //Start a download process for each page
@@ -224,7 +218,7 @@ function downloadPage (url, fPath, fileName) {
 
     //Find the image link
     $ = CHEERIO.load(bd);
-    url = $('#image').attr('src');
+    url = $('#img').attr('src');
 
     //Request image and write to file
     REQUEST(url).pipe(FS.createWriteStream(fPath+fileName+'.jpg'));
